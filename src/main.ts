@@ -64,7 +64,7 @@ async function run(): Promise<void> {
 
     const client = github.getOctokit(core.getInput('token'))
 
-    const tag_rsp = await client.git.createTag({
+    const tag_rsp = await client.rest.git.createTag({
       ...github.context.repo,
       tag,
       message: core.getInput('message'),
@@ -76,7 +76,7 @@ async function run(): Promise<void> {
       return
     }
 
-    const ref_rsp = await client.git.createRef({
+    const ref_rsp = await client.rest.git.createRef({
       ...github.context.repo,
       ref: `refs/tags/${tag}`,
       sha: tag_rsp.data.sha
